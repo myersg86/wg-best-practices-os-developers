@@ -374,7 +374,15 @@ The performance overhead is dependent on the number of function’s instrumented
 
 `-fstack-protector-strong` is recommended for all applications with conventional stack behavior. Applications with hand-written assembler optimization that make assumptions about the layout of the stack may be incompatible with stack-protector functionality.
 
+#### Caveats
+
+On September 12th, 2023 Meta's Read Team disclosed a vulnerability in GCC on AArch64 targets that causes GCC's stack smashing protection not to detect or defend against overflows of dynamically-sized local variables such as variable-length arrays or buffers allocated using `alloca()`[^Meta23]. At the time of disclosure, all version of GCC from 5.4.0 to trunk as of 2023-05-15 were affected. In response, Arm issued a patch that has been backported to GCC 7 - 13 and are incorporated to new releases of Arm GNU Toolchain[^Arm23]. Users of GCC-based toolchains for Aarch64 should ensure they use a version of the GNU toolchain incorporating these patches.
+
 [^Han11]: Shen, Han, [New stack protector option for gcc](https://docs.google.com/document/d/1xXBH6rRZue4f296vGt9YQcuLVQHeE516stHwt8M9xyU), Google Docs, 2011-11-30.
+
+[^Meta23]: Hebb, Tom, [GCC's -fstack-protector fails to guard dynamic stack allocations on ARM64](https://github.com/metaredteam/external-disclosures/security/advisories/GHSA-x7ch-h5rf-w2mf), GithHu metaredteam/external-disclosures Advisories, 2023-09-12.
+
+[^Arm23]: Arm, [GCC Stack Protector Vulnerability AArch64](https://developer.arm.com/Arm%20Security%20Center/GCC%20Stack%20Protector%20Vulnerability%20AArch64), Arm Security Center, 2023-09-12.
 
 ---
 
